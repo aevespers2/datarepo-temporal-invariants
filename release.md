@@ -1,74 +1,72 @@
 # Release Plan
 
 ## Current Decision
+
 Status: `BLOCKED — FORK/SCOPE APPROVAL REQUIRED`
 
-This repository is not a blank temporal-invariant implementation. It contains the existing `data-repository` Python package at version `0.0.2`, declares Apache-2.0 licensing, and retains upstream project metadata pointing to `neuralinkcorp/datarepo`. The recently added temporal-invariant documents and coordination files do not establish whether this repository is intended to be a mirror, maintained fork, research overlay, or independently published derivative. No release is eligible until that relationship, naming, ownership, and compatibility boundary are approved and current build/test/security/provenance evidence is produced for reviewed head `dec114917dab8c886a6ce074fd473c0858b303fe`.
+This repository contains the existing `data-repository` Python package at version `0.0.2` with upstream metadata pointing to `neuralinkcorp/datarepo`, plus newer temporal-invariant coordination material. No release is eligible because P0 is blocked on approval of mirror/fork/overlay/derivative identity, `punchlist.md` is absent, inherited and local work are not separated, and candidate head `6113bae9b29e17de68ed5eefdb7e0c4b14a1054a` lacks current build, test, security, documentation, schema/fixture, provenance, artifact, and rollback evidence.
 
 ## Versioning
-- Preserve and account for the existing package version `0.0.2`; do not silently replace it with an unrelated `0.1.0-alpha.1` line.
-- Approve one release identity before tagging: upstream mirror, maintained fork, documentation-only temporal overlay, or renamed independent derivative.
-- A fork release must record its upstream commit and use a clearly differentiated version/name consistent with Python packaging rules.
-- Temporal-invariant schemas or APIs may not be versioned as package capabilities until implemented, tested, and integrated without obscuring upstream provenance.
 
-## Candidate Scope
-### Fork baseline
-- Record upstream repository/commit, imported history, license/notices, package identity, supported Python versions, dependency ranges, build system, tests, workflows, and published-artifact history.
-- Reproduce installation, build, complete tests, formatting, lint, type checks, documentation, and smoke usage.
-- Review dependency, credential, data-source, serialization, filesystem, network, and supply-chain boundaries.
+- Preserve the inherited `0.0.2` package lineage.
+- Approve one identity before tagging: upstream mirror, maintained fork, documentation-only temporal overlay, or renamed derivative.
+- Any fork package must record its exact upstream commit and use differentiated naming/versioning.
+- Temporal-invariant capability may not be versioned until its contracts, fixtures, migration, and security evidence pass.
 
-### Temporal-invariant overlay
-- Approve the invariant problem statement, relation to the existing datarepo package, schema/API boundaries, non-goals, migration policy, and whether the overlay is documentation-only or executable.
-- If executable, add versioned schemas, deterministic fixtures, validation, compatibility tests, and independent provenance.
+## Release Scope
 
-## Existing Candidate Assets
-- `pyproject.toml` defines `data-repository` version `0.0.2`, Python `>=3.8`, Hatchling builds, package contents, dependency ranges, and Apache-2.0 licensing.
-- The repository has substantial upstream implementation and release history predating the temporal-invariant coordination files.
-- Temporal-invariant notes and release/task coordination files are present.
+### Inherited baseline
+- Upstream commit/history, divergence, license/notices, package identity, supported Python matrix, build/install/tests/static checks, security, documentation, and provenance.
 
-These assets are not selected as newly completed aevespers2 release work until upstream provenance and local verification are separated and approved.
+### Optional temporal overlay
+- Approved problem statement, users, inputs/outputs, canonical semantics, non-goals, compatibility, migration, versioned schemas, deterministic fixtures, and rollback.
 
 ## Selected Completed Work
-None. Existing upstream-derived implementation has not been re-verified as an aevespers2 candidate, and the temporal-invariant overlay has no completed schema, fixture, validator, compatibility, security, or provenance evidence.
+
+None. Existing upstream implementation and temporal notes are candidate inputs, not newly verified aevespers2 release work.
 
 ## Planned Changelog Entries
-- `Fork`: upstream baseline, divergence, license/notice preservation, and local ownership model.
-- `Documentation`: approved temporal-invariant charter, relation to datarepo, semantics, examples, non-goals, and migration policy.
-- `Added`: versioned invariant schemas, validators, and fixtures only after implementation gates pass.
-- `Security`: dependency, secret, data-source, parser/serialization, filesystem/network, workflow-permission, and supply-chain findings.
-- `Release`: build/test reports, SBOM, checksums, provenance, and approval decision.
+
+- `Fork`: upstream baseline, divergence, attribution, and ownership model.
+- `Documentation`: approved temporal-overlay charter, semantics, compatibility, non-goals, and migration policy.
+- `Added`: schemas, validators, and fixtures only after implementation gates pass.
+- `Security`: dependency, secret, data-source, serialization, filesystem, network, and workflow findings.
+- `Release`: package/source artifacts, SBOM, checksums, provenance, and approval.
 
 ## Acceptance Gates
+
 | Gate | Status | Requirement |
 |---|---|---|
-| Fork/scope decision | BLOCKED | Approve mirror vs fork vs overlay vs renamed derivative, upstream attribution, package/release identity, and publication target. |
-| Task completion | FAIL | P0 is revised to the approved scope and reaches `DONE`; `punchlist.md` exists with completed evidence. |
-| Upstream provenance | FAIL | Exact upstream baseline, divergence, imported history, license/notices, and prior release relationship recorded. |
-| Build/install | NO CURRENT EVIDENCE | Clean Hatchling build and installation pass on the supported Python matrix. |
-| Tests/static validation | NO CURRENT EVIDENCE | Complete tests, formatting, lint, mypy, docs, and smoke usage pass at the candidate commit. |
-| Temporal determinism | NO IMPLEMENTATION EVIDENCE | Any included invariant schemas/validators reproduce canonical outputs and hashes with positive, negative, boundary, ordering, and migration fixtures. |
-| Security | NO CURRENT EVIDENCE | Dependency, secret, data-source, parser/serialization, filesystem/network, CI, and supply-chain checks pass. |
-| Documentation | PARTIAL | Package metadata and temporal notes exist; approved scope, verified setup, invariant semantics, compatibility, limitations, and rollback are incomplete. |
-| Provenance | NO RELEASE EVIDENCE | Candidate/upstream commits, tool/runtime versions, commands, test reports, artifact hashes, SBOM, and attestations recorded. |
+| Fork/scope decision | BLOCKED | Approve repository identity, package/release name, publication target, and overlay boundary. |
+| Task completion | FAIL | P0 is `DONE`; `punchlist.md` exists and included work has evidence. |
+| Upstream provenance | FAIL | Exact baseline, divergence, imported history, license/notices, and prior release relationship are recorded. |
+| Build/tests/static | NO CURRENT EVIDENCE | Clean build/install, full tests, format, lint, type, docs, and smoke checks pass. |
+| Temporal determinism | NOT YET INCLUDED | If executable, canonical outputs, hashes, fixtures, compatibility, and migrations pass. |
+| Security | NO CURRENT EVIDENCE | Dependencies, secrets, parsers/serialization, filesystem/network, CI, and supply chain pass review. |
+| Documentation | PARTIAL | Package metadata and notes exist; approved identity, setup, semantics, limitations, and rollback remain incomplete. |
+| Provenance | NO RELEASE EVIDENCE | Candidate/upstream commits, runtimes, commands, reports, artifacts, hashes, SBOM, and attestations are retained. |
 | Approval | PENDING | Explicit release approval after all blocking gates pass. |
 
 ## Artifact Requirements
+
 - Upstream/fork provenance and divergence report.
-- Source archive and reproducible Python sdist/wheel for any package candidate.
-- Complete build, test, static-analysis, documentation, and smoke reports.
-- Versioned schemas/fixtures/compatibility matrix for any temporal-invariant implementation.
-- Security/dependency report, SBOM, SHA-256 checksums, and provenance manifest.
+- Reproducible source archive, sdist, and wheel for any package candidate.
+- Complete build, test, static, documentation, smoke, security, and dependency reports.
+- For any overlay: versioned schemas, fixtures, compatibility matrix, migration evidence, and canonical hashes.
+- SBOM, SHA-256 checksums, provenance manifest, and rollback instructions.
 
 ## Rollback Criteria
-Withdraw or roll back if upstream attribution or release identity is unclear, local changes cannot be separated from imported history, packaging changes overwrite or misrepresent the existing `0.0.2` baseline, tests are not reproducible, an invariant accepts invalid state or breaks compatible data without declaration, severe security findings remain, or artifact hashes differ. Restore the recorded upstream/fork baseline and preserve rejected overlay evidence.
+
+Withdraw or roll back if attribution or identity is unclear, imported and local work cannot be separated, packaging misrepresents the `0.0.2` baseline, tests are non-reproducible, temporal semantics accept invalid state or break compatibility silently, severe security findings remain, or hashes differ. Restore the approved upstream/fork baseline and preserve rejected overlay evidence.
 
 ## Unresolved Blockers
-- Approval is required for the repository's intended relationship to `neuralinkcorp/datarepo`, local ownership, package naming, and publication target.
-- The current task chain describes a new temporal-invariant product but does not reconcile the existing `data-repository` package and upstream history.
-- `punchlist.md` is absent and P0 remains `READY`.
-- No current install/build/test/static/security/documentation/provenance evidence is tied to the candidate commit.
-- No temporal-invariant schema, validator, deterministic fixture set, compatibility matrix, or migration evidence exists.
-- Publishing under the existing upstream package identity is prohibited until provenance, authority, and versioning are approved.
+
+- Approval is required for mirror/fork/overlay/derivative identity, package naming, publication target, and ownership.
+- `punchlist.md` and accepted Builder evidence are absent.
+- No current install/build/test/static/security/documentation/provenance bundle exists.
+- No implemented temporal schema, validator, deterministic fixture set, compatibility matrix, or migration evidence exists.
+- Publishing under the inherited package identity remains prohibited until authority and provenance are approved.
 
 ## Release Log
-- 2026-07-16: Corrected the release model to preserve the existing `data-repository` `0.0.2` and upstream provenance; candidate remains `BLOCKED — FORK/SCOPE APPROVAL REQUIRED`.
+
+- 2026-07-16: Aligned the candidate with the explicit fork/overlay decision gate; no release-ready work selected.
