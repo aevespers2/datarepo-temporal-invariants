@@ -43,6 +43,7 @@ The inherited `data-repository` Python package remains at version `0.0.2` with u
 - Incident observations and competing explanations have been preserved without asserting an unverified cause.
 - Immediate containment, evidence-capture requirements, technical repair requirements, validation fixtures, and incident-closure criteria are documented.
 - Product work has been reprioritized behind repository-integrity restoration.
+- A deployment evidence record now fail-closes publication and packaging while the incident remains open.
 
 No package implementation, temporal overlay, or publication artifact is selected as releasable completed work.
 
@@ -78,6 +79,7 @@ No package implementation, temporal overlay, or publication artifact is selected
 | Documentation | PARTIAL | Incident requirements and package metadata exist; approved identity, setup, semantics, limitations, migration, and operator recovery remain incomplete. |
 | Provenance | FAIL | Candidate/upstream commits, commands, runtimes, reports, artifacts, hashes, SBOM, attestations, and reviewer identities are retained. |
 | Exact-head CI | FAIL | Candidate head `13d2b95e2963eb924cecd0b413346166600ad631` has no accepted status checks or pull-request workflow runs. |
+| Deployment | BLOCKED | `deploy.md` records the 2026-07-17 fail-closed review at commit `55f290ff24c00728cd994eb6ae498fa8672dd1f5`; no package, tag, publication, workflow activation, remote integration, or downstream pin is authorized. |
 | Release approval | PENDING | Explicit approval only after every blocking gate passes. |
 
 ## Artifact Requirements
@@ -120,3 +122,4 @@ After release eligibility is restored, also withdraw or roll back if attribution
 
 - 2026-07-16: Aligned the candidate with the explicit fork/overlay decision gate; no release-ready work selected.
 - 2026-07-17: Elevated unexplained tracked forensic-state drift to a release-blocking suspected integrity incident; added containment, evidence, repair, independent-validation, artifact, and rollback gates. No release-ready work selected.
+- 2026-07-17: Added `deploy.md` at commit `55f290ff24c00728cd994eb6ae498fa8672dd1f5` with environment, permissions, artifact, configuration, health, observability, rollback, and post-deployment evidence; no deployment was attempted.
