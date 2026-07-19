@@ -4,7 +4,8 @@ repo_url: https://github.com/neuralinkcorp/datarepo/
 repo_name: neuralink/datarepo
 
 # The site and repository metadata above are inherited from the upstream
-# package. See docs/project-guide.md before publishing or changing identity.
+# package. See docs/project-guide.md and docs/authority-and-claims.md before
+# publishing or changing identity.
 
 theme:
   name: material
@@ -73,10 +74,18 @@ site_dir: site
 
 nav:
   - Repository Guide: project-guide.md
-  - Architecture: architecture.md
-  - Developer Guide: developer-guide.md
-  - Integrity Operations: repository-integrity.md
-  - Proposed Temporal Overlay: temporal-overlay-design.md
+  - Architecture and Design:
+      - Architecture: architecture.md
+      - Authority and Claims: authority-and-claims.md
+      - API and Extension Boundaries: api-and-extension-boundaries.md
+      - Proposed Temporal Overlay: temporal-overlay-design.md
+  - Development and Operations:
+      - Developer Guide: developer-guide.md
+      - Integrity Operations: repository-integrity.md
+      - Release Evidence: release-evidence.md
+  - Decision Records:
+      - ADR-0001 — Repository Identity: decisions/0001-repository-identity.md
+      - ADR-0002 — Overlay Isolation: decisions/0002-temporal-overlay-isolation.md
   - Inherited Package:
       - Overview: README.md
       - User Guide: user-guide.md
