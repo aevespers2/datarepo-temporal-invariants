@@ -28,7 +28,9 @@ States: `PROPOSED` · `READY` · `IN PROGRESS` · `BLOCKED` · `REVIEW` · `DONE
 
 ## Documentation support
 
-The GitHub Pages/MkDocs material documents the inherited package, current incident boundary, developer stop rules, release posture, and a non-binding temporal-overlay design envelope. It supports P0–P3 review but does not change task status, close the incident, approve repository identity, or authorize implementation/publication.
+The GitHub Pages/MkDocs material documents the inherited package, current incident boundary, developer stop rules, release posture, claim-governance vocabulary, API and extension boundaries, evidence requirements, proposed decision records, and a non-binding temporal-overlay design envelope. It supports P0–P3 review but does not change task status, close the incident, approve repository identity, or authorize implementation/publication.
+
+The documentation candidate must itself pass strict build, link, diagram, identity, privacy, accessibility, and exact-head artifact review before it can improve the documentation gate. That verification cannot satisfy incident, runtime, temporal, packaging, deployment, or release-approval gates.
 
 ## Builder Log
 
@@ -36,3 +38,4 @@ Record incident evidence hashes, current and committed marker values, script and
 
 - 2026-07-17 — Reclassified the tracked `.forensics/last_run_epoch.txt` drift as a suspected security incident until disproven. Reported evidence indicates a shift from `1769819269` to `1771791970`, an automation writer path, and a `Resource deadlock avoided` error in another worktree. The change may be benign automation churn, lock contention, unauthorized invocation, worktree confusion, or false provenance; no hypothesis is accepted without evidence.
 - 2026-07-19 — Added a documentation-only project guide, architecture/trust-boundary model, incident-safe onboarding guide, repository-integrity operations playbook, proposed temporal-overlay design envelope, and expanded MkDocs navigation. No implementation, incident, release, deployment, or identity status changed.
+- 2026-07-19 — Added authority/claims governance, inherited API and extension-boundary guidance, a release-evidence matrix, and proposed ADRs for repository identity and temporal-overlay isolation. Updated Pages navigation and the project guide while leaving every P0–P4 state unchanged.
