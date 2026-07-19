@@ -26,8 +26,13 @@ States: `PROPOSED` · `READY` · `IN PROGRESS` · `BLOCKED` · `REVIEW` · `DONE
 | P3 | Define a schema-first temporal-invariant contract | Architect | P2 | PROPOSED | Problem statement, users, inputs/outputs, canonical semantics, compatibility, migration, non-goals, fixtures, and rollback are Builder-ready without modifying upstream behavior silently. |
 | P4 | Implement the approved overlay separately | Builder | P3 | PROPOSED | Versioned schemas/validators and deterministic positive/negative fixtures pass; packaging and documentation preserve upstream/local separation. |
 
+## Documentation support
+
+The GitHub Pages/MkDocs material documents the inherited package, current incident boundary, developer stop rules, release posture, and a non-binding temporal-overlay design envelope. It supports P0–P3 review but does not change task status, close the incident, approve repository identity, or authorize implementation/publication.
+
 ## Builder Log
 
 Record incident evidence hashes, current and committed marker values, script and log hashes, worktree list, hooks, refs, scheduler/process evidence, lock behavior, root cause, commands/results, tests, rollback, approval decisions, upstream and local commits, package artifacts, dependency/security findings, schema/fixture hashes, migration evidence, and follow-ups.
 
 - 2026-07-17 — Reclassified the tracked `.forensics/last_run_epoch.txt` drift as a suspected security incident until disproven. Reported evidence indicates a shift from `1769819269` to `1771791970`, an automation writer path, and a `Resource deadlock avoided` error in another worktree. The change may be benign automation churn, lock contention, unauthorized invocation, worktree confusion, or false provenance; no hypothesis is accepted without evidence.
+- 2026-07-19 — Added a documentation-only project guide, architecture/trust-boundary model, incident-safe onboarding guide, repository-integrity operations playbook, proposed temporal-overlay design envelope, and expanded MkDocs navigation. No implementation, incident, release, deployment, or identity status changed.
