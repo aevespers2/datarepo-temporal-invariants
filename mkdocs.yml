@@ -3,6 +3,9 @@ site_url: https://data-repo.io
 repo_url: https://github.com/neuralinkcorp/datarepo/
 repo_name: neuralink/datarepo
 
+# The site and repository metadata above are inherited from the upstream
+# package. See docs/project-guide.md before publishing or changing identity.
+
 theme:
   name: material
   palette:
@@ -69,9 +72,15 @@ docs_dir: docs
 site_dir: site
 
 nav:
-  - Home: /
-  - User Guide: user-guide.md
-  - API docs: api-docs.md
+  - Repository Guide: project-guide.md
+  - Architecture: architecture.md
+  - Developer Guide: developer-guide.md
+  - Integrity Operations: repository-integrity.md
+  - Proposed Temporal Overlay: temporal-overlay-design.md
+  - Inherited Package:
+      - Overview: README.md
+      - User Guide: user-guide.md
+      - API Reference: api-docs.md
 
 hooks:
   - docs/hooks.py
