@@ -100,6 +100,20 @@ The local planning files may describe future work, but they do not retroactively
 | Integrity controls | Preserve evidence and prevent unsafe mutable-state behavior | Local, incomplete |
 | Release controls | Gate publication on provenance, tests, security, artifacts, and approval | Local, blocked |
 
+## Documentation authority
+
+Documentation uses explicit maturity classes so inherited capabilities, preserved observations, local configuration, proposed design, test evidence, independent verification, and approval are not conflated. `taskchain.md` governs sequencing, `release.md` governs eligibility, accepted ADRs govern durable architecture decisions, and the changelog records history. Pages content is explanatory and cannot override those records.
+
+The current documentation package adds review material only. It does not:
+
+- close the suspected repository-integrity incident;
+- approve a repository or package identity;
+- verify the inherited package baseline;
+- accept temporal schemas or semantics;
+- authorize Pages or package publication.
+
+See [Authority and claims governance](authority-and-claims.md) for the complete vocabulary and publication stop rules.
+
 ## Delivery phases
 
 ### P0 — Restore repository trust
@@ -122,19 +136,44 @@ Define users, problems, inputs, outputs, canonical semantics, time model, compat
 
 Only after approval, add versioned schemas and validators without silently modifying inherited interfaces or claiming unverified compatibility.
 
+## Reviewable architecture decisions
+
+Two proposed ADRs turn the major unresolved choices into explicit review records:
+
+- [ADR-0001: Repository identity and publication authority](decisions/0001-repository-identity.md) compares mirror, maintained-fork, documentation-only, and renamed-derivative models. It remains blocked by incident closure.
+- [ADR-0002: Isolate temporal validation from inherited query behavior](decisions/0002-temporal-overlay-isolation.md) proposes an additive, explicit, read-only validation boundary. It remains dependent on identity and contract approval.
+
+Neither ADR is accepted implementation authority.
+
 ## Release posture
 
 No tag, package, documentation deployment, registry publication, workflow activation, or downstream pin is authorized while `release.md` is blocked. Documentation improvements are review artifacts, not evidence that the inherited package or future overlay is releasable.
 
+The [release evidence matrix](release-evidence.md) maps each gate to the immutable records required for acceptance and keeps documentation verification distinct from runtime, incident, temporal, deployment, and release approval.
+
 ## Documentation map
+
+### Local project and governance
+
+- [Repository project guide](project-guide.md)
+- [Architecture and trust boundaries](architecture.md)
+- [Authority and claims governance](authority-and-claims.md)
+- [API and extension boundaries](api-and-extension-boundaries.md)
+- [Developer onboarding](developer-guide.md)
+- [Repository-integrity operations](repository-integrity.md)
+- [Release evidence and verification](release-evidence.md)
+- [Proposed temporal-overlay design envelope](temporal-overlay-design.md)
+- [ADR-0001: Repository identity](decisions/0001-repository-identity.md)
+- [ADR-0002: Temporal-overlay isolation](decisions/0002-temporal-overlay-isolation.md)
+
+### Inherited package material
 
 - [Upstream-oriented package overview](README.md)
 - [Inherited user guide](user-guide.md)
-- [API reference entry points](api-docs.md)
-- [Architecture and trust boundaries](architecture.md)
-- [Developer onboarding](developer-guide.md)
-- [Repository-integrity operations](repository-integrity.md)
-- [Proposed temporal-overlay design envelope](temporal-overlay-design.md)
+- [Inherited API reference entry points](api-docs.md)
+
+### Repository control records
+
 - [Task chain](https://github.com/aevespers2/datarepo-temporal-invariants/blob/main/taskchain.md)
 - [Release plan](https://github.com/aevespers2/datarepo-temporal-invariants/blob/main/release.md)
 - [Deployment record](https://github.com/aevespers2/datarepo-temporal-invariants/blob/main/deploy.md)
