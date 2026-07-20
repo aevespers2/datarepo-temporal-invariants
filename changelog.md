@@ -19,6 +19,7 @@ All notable product, architecture, implementation, release, and deployment chang
 - 2026-07-20 — Corrected the architecture status so forensic automation remains open and blocked rather than being described as contained without accepted evidence.
 - 2026-07-20 — Added an obstruction and gluing analysis covering repository/package identity, subject identity, clocks and ordering, canonicalization, result semantics, evidence transport, remote-observation authority, privacy, build hooks, revocation, emergency stop, pairwise edges, and required triple-overlap witnesses.
 - 2026-07-20 — Added P3G to the task chain so cross-repository compatibility contracts and deterministic gluing witnesses precede any temporal-overlay implementation.
+- 2026-07-20 — Added proposed ADR-0003 separating local mutable operational state, immutable run evidence, and explicitly reviewed repository evidence; implementation remains blocked pending preservation, approval, fixtures, independent replay, and incident closure.
 
 ### Documentation
 - 2026-07-19 — Added a repository project guide, architecture diagrams, incident-safe developer onboarding, repository-integrity operations playbook, proposed temporal-overlay design, and expanded MkDocs navigation.
@@ -30,13 +31,14 @@ All notable product, architecture, implementation, release, and deployment chang
 - 2026-07-20 — Added a safety-first site homepage, Mermaid rendering configuration, clean-build behavior when optional catalog assets are absent, corrected ROAPI entry points, and incident-safe validation commands using the existing `test/` tree and Python 3.10+ source requirement.
 - 2026-07-20 — Repaired evidence capture to handle absent markers, reject symlinked observations, redact remote credentials, retain sensitive configuration names without values, and exclude the checksum manifest from its own atomic hash set.
 - 2026-07-20 — Added `docs/obstruction-and-gluing.md`, linked it into Pages navigation, and created `punchlist.md` spanning incident containment, documentation verification, identity, inherited baseline, temporal contracts, portfolio gluing, security, privacy, release, and recovery.
+- 2026-07-20 — Added ADR-0003 to Pages navigation and aligned the project guide, task chain, punch list, release plan, and changelog around the state/evidence separation model.
 
 ### Implementation
 - Existing upstream-derived code is not recorded as newly completed local work; temporal notes remain proposals until contracts and fixtures exist.
 - Reported drift of `.forensics/last_run_epoch.txt` from `1769819269` to `1771791970` is preserved as incident evidence. The available report also identifies `scripts/git_forensics_autocommit.sh` as a writer path and records `Resource deadlock avoided` in another worktree.
 - These observations do not prove malicious activity. Benign automation churn, lock contention, unauthorized invocation, hook or scheduler misuse, worktree confusion, and altered provenance remain hypotheses requiring evidence.
 - 2026-07-19 — No runtime, schema, query, storage, packaging, hook, scheduler, network, credential, or publication behavior changed in the documentation milestone.
-- 2026-07-20 — No runtime, schema, adapter, credential, enforcement, release, deployment, payment, or publication authority changed in the gluing milestone.
+- 2026-07-20 — No runtime, schema, adapter, credential, enforcement, release, deployment, payment, publication, or incident-repair authority changed in the gluing and ADR milestone.
 
 ### Security
 - The repository is now treated as under a suspected security incident until the writer, invocation path, refs, hooks, remotes, credentials, worktrees, logs, and file metadata are examined and the automation is repaired.
@@ -45,13 +47,14 @@ All notable product, architecture, implementation, release, and deployment chang
 - 2026-07-19 — Added a bounded preserve/contain/investigate/repair/independent-validation playbook; the playbook does not close the incident or assert malicious activity.
 - 2026-07-19 — Added documentation rules prohibiting unsupported compromise attribution and requiring evidence-qualified incident language.
 - 2026-07-20 — Documented fail-closed capability, hostile-input, evidence-revocation, publication-privacy, no-hidden-execution, emergency-stop, and bounded-recovery requirements across the proposed integration edges.
+- 2026-07-20 — Classified automatic promotion of mutable run state into tracked evidence as prohibited; reviewed promotion must remain explicit and independently verifiable.
 
 ### Release
 - Release remains blocked by the incident gate, fork/scope approval, upstream divergence evidence, current build/test/security results, and provenance.
 - 2026-07-19 — Documentation completeness improved, but no build, test, security, provenance, publication, or deployment gate was marked passed.
 - 2026-07-19 — Added artifact, digest, replay, review, invalidation, and fail-closed evidence requirements without changing the blocked release decision.
 - 2026-07-20 — Replaced the credential-bearing package and Pages publishing workflow with least-privilege, exact-head validation and retained evidence. No package or site publication is authorized.
-- 2026-07-20 — Added a concrete punch list and cross-repository witness requirements; the candidate still requires an exact-head workflow run and all incident, identity, baseline, contract, privacy, provenance, and approval gates remain blocked or incomplete.
+- 2026-07-20 — Added a concrete punch list, cross-repository witness requirements, and state/evidence architecture review gate; the candidate still requires an exact-head workflow run and all incident, identity, baseline, contract, privacy, provenance, and approval gates remain blocked or incomplete.
 
 ### Deployment
 - No package publication under the inherited identity or new temporal product name is authorized.
