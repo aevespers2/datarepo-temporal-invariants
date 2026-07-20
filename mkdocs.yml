@@ -1,11 +1,9 @@
-site_name: datarepo
-site_url: https://data-repo.io
-repo_url: https://github.com/neuralinkcorp/datarepo/
-repo_name: neuralink/datarepo
+site_name: datarepo-temporal-invariants — review only
+repo_url: https://github.com/aevespers2/datarepo-temporal-invariants
+repo_name: aevespers2/datarepo-temporal-invariants
 
-# The site and repository metadata above are inherited from the upstream
-# package. See docs/project-guide.md and docs/authority-and-claims.md before
-# publishing or changing identity.
+# Publication remains blocked. The inherited upstream identity is preserved in
+# docs/README.md and documented in docs/project-guide.md.
 
 theme:
   name: material
@@ -33,7 +31,6 @@ theme:
 
 extra_javascript:
   - javascripts/shortcuts.js
-  - examples/web_catalog/assets/*.js
 
 plugins:
   - search
@@ -58,7 +55,11 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.mark
   - pymdownx.smartsymbols
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed
   - pymdownx.tasklist:
       custom_checkbox: true
@@ -67,12 +68,12 @@ markdown_extensions:
 
 extra_css:
   - stylesheets/extra.css
-  - examples/web_catalog/assets/*.css
 
 docs_dir: docs
 site_dir: site
 
 nav:
+  - Home: index.md
   - Repository Guide: project-guide.md
   - Architecture and Design:
       - Architecture: architecture.md
