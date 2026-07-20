@@ -9,11 +9,13 @@ The commands below describe the intended contributor workflow. They are not evid
 ## Prerequisites
 
 - Git with worktree support;
-- Python 3.8 or newer, subject to the future supported-version decision;
+- Python 3.10 or newer for the current source tree;
 - an isolated virtual environment;
 - no globally configured Git hook path affecting the checkout;
 - no scheduled invocation of repository scripts;
 - enough local disk space for Python, Arrow, Polars, Delta Lake, documentation, and test dependencies.
+
+`pyproject.toml` still declares Python 3.8 compatibility, while current source annotations require Python 3.10 or newer and existing CI uses Python 3.10. Treat that metadata mismatch as a release blocker rather than evidence of Python 3.8 support.
 
 ## 1. Establish repository identity
 
@@ -26,10 +28,11 @@ git rev-parse HEAD
 git status --porcelain=v2 --branch
 git worktree list --porcelain
 git remote -v
-git config --show-origin --get-regexp 'core\.hooksPath|include|credential|url\..*\.insteadOf' || true
+git config --show-origin --name-only --get-regexp \
+  'core\.hooksPath|include|credential|url\..*\.insteadOf' || true
 ```
 
-Confirm that the resolved repository root and worktree are the intended paths. Stop if the checkout contains unexplained changes, unexpected hooks, unknown remotes, or an active process that may write into `.forensics/`.
+Confirm that the resolved repository root and worktree are the intended paths. Stop if the checkout contains unexplained changes, unexpected hooks, unknown remotes, or an active process that may write into `.forensics/`. Do not retain raw credential-bearing remote or configuration values in shared evidence.
 
 ## 2. Inspect before execution
 
@@ -40,19 +43,23 @@ Review these files before running any automation:
 - `release.md`;
 - `deploy.md`;
 - `pyproject.toml`;
+- `requirements-validation.txt`;
 - any script, hook, task, or build hook that the intended command may invoke.
 
 Do not normalize, discard, or overwrite incident evidence. In particular, avoid `git reset --hard`, `git clean`, forced checkout, or automated formatting across the repository until relevant evidence is captured.
 
-## 3. Create an isolated Python environment
+## 3. Create a validation-only Python environment
 
-A typical local environment can be prepared with:
+The project defines a custom Hatch build hook that runs the static-site asset toolchain during package builds. An editable package installation can therefore invoke unreviewed Node and network work. Do not use `pip install -e .` or build the package during incident-safe onboarding.
+
+After reviewing `requirements-validation.txt`, prepare a validation-only environment:
 
 ```bash
-python3 -m venv .venv
+python3.10 -m venv .venv
 . .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install -e '.[dev]'
+python -m pip install --requirement requirements-validation.txt
+export PYTHONPATH="$PWD/src"
 ```
 
 Record the exact Python, pip, operating-system, architecture, and dependency versions used:
@@ -67,17 +74,18 @@ Keep local environment snapshots out of commits unless a reviewed evidence forma
 
 ## 4. Run bounded checks
 
-Prefer targeted, deterministic checks before the complete suite:
+Prefer targeted, deterministic checks before broader validation:
 
 ```bash
-pytest -q
-black --check src tests
-flake8 src tests
-mypy src
-mkdocs build --strict
+PYTHONPATH=src python -m compileall -q src/datarepo
+PYTHONPATH=src python -m pytest -q test
+black --check src/datarepo
+flake8 src/datarepo --count --select=E9,F63,F7,F82 --show-source --statistics
+mypy src/datarepo
+mkdocs build --strict --site-dir site
 ```
 
-Paths may need adjustment to match the verified repository tree. A command that is unavailable, misconfigured, or unexpectedly invokes network/build automation should fail the review rather than be replaced silently.
+The inherited test tree is `test/`, not `tests/`. Formatting and lint checks are scoped to `src/datarepo`, matching the inherited workflow. A command that is unavailable, misconfigured, or unexpectedly invokes network/build automation should fail the review rather than be replaced silently.
 
 For accepted evidence, record:
 
@@ -92,19 +100,15 @@ For accepted evidence, record:
 
 ## 5. Build documentation locally
 
-```bash
-mkdocs serve
-```
-
-Use local serving only after reviewing `mkdocs.yml`, `docs/hooks.py`, referenced JavaScript/CSS, and any generated catalog assets. The documentation site is not approved for deployment while the release and integrity gates remain blocked.
-
-For a non-serving build:
+A clean documentation build does not require the inherited web-catalog generator. The documentation hook omits the catalog preview when reviewed generated assets are absent.
 
 ```bash
-mkdocs build --strict
+mkdocs build --strict --site-dir site
 ```
 
-Review the generated `site/` directory for private endpoints, credentials, data samples, absolute local paths, inherited branding, broken links, and unapproved product claims before retaining it as an artifact.
+Use `mkdocs serve` only after reviewing `mkdocs.yml`, `docs/hooks.py`, referenced JavaScript/CSS, and generated output. The documentation site is not approved for deployment while the release and integrity gates remain blocked.
+
+The optional web catalog is a separate, executable generation path with Python, package, Node, and data dependencies. Do not generate or embed it until that path is independently reviewed and authorized. Review the generated `site/` directory for private endpoints, credentials, data samples, absolute local paths, inherited branding, broken links, and unapproved product claims before retaining it as an artifact.
 
 ## 6. Understand the package model
 
