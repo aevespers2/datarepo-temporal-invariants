@@ -32,7 +32,7 @@ A single person may perform multiple roles, but the independent replay must be c
 
 ## Phase 1 — Preserve
 
-Capture without editing the affected files:
+Capture without editing the affected files. The following example handles an absent tracked marker, refuses a symlinked observed marker, redacts remote credentials, records sensitive Git configuration names without values, and writes the checksum manifest atomically after hashing every other evidence file.
 
 ```bash
 umask 077
@@ -40,16 +40,76 @@ mkdir -p "$HOME/datarepo-incident-evidence"
 EVIDENCE="$HOME/datarepo-incident-evidence/$(date -u +%Y%m%dT%H%M%SZ)"
 mkdir -p "$EVIDENCE"
 
+# Read-only repository and worktree observations.
 git status --porcelain=v2 --branch > "$EVIDENCE/git-status.txt"
 git diff --binary -- .forensics/last_run_epoch.txt > "$EVIDENCE/marker.diff"
-git show HEAD:.forensics/last_run_epoch.txt > "$EVIDENCE/marker.committed.txt"
-cp -p .forensics/last_run_epoch.txt "$EVIDENCE/marker.observed.txt"
 git worktree list --porcelain > "$EVIDENCE/worktrees.txt"
 git reflog --all --date=iso-strict > "$EVIDENCE/reflog.txt"
-git remote -v > "$EVIDENCE/remotes.txt"
-git config --show-origin --get-regexp 'core\.hooksPath|include|credential|url\..*\.insteadOf' \
-  > "$EVIDENCE/git-config-sensitive.txt" 2>&1 || true
-find "$EVIDENCE" -type f -exec shasum -a 256 {} \; | sort > "$EVIDENCE/SHA256SUMS"
+
+# Preserve the committed marker only when it exists at the selected commit.
+if git cat-file -e HEAD:.forensics/last_run_epoch.txt 2>/dev/null; then
+  git show HEAD:.forensics/last_run_epoch.txt > "$EVIDENCE/marker.committed.txt"
+else
+  printf 'HEAD does not contain .forensics/last_run_epoch.txt\n' \
+    > "$EVIDENCE/marker.committed.absent.txt"
+fi
+
+# Preserve an observed marker only when it is a regular, non-symlink file.
+if [ -f .forensics/last_run_epoch.txt ] && [ ! -L .forensics/last_run_epoch.txt ]; then
+  cp -p .forensics/last_run_epoch.txt "$EVIDENCE/marker.observed.txt"
+else
+  printf 'Observed marker is absent or is not an approved regular file\n' \
+    > "$EVIDENCE/marker.observed.absent-or-rejected.txt"
+fi
+
+# Redact URL user information, query strings, and fragments before retention.
+git remote -v | python - "$EVIDENCE/remotes.redacted.txt" <<'PY'
+from pathlib import Path
+import re
+import sys
+from urllib.parse import urlsplit, urlunsplit
+
+output = Path(sys.argv[1])
+redacted = []
+for raw in sys.stdin:
+    fields = raw.rstrip("\n").split()
+    if len(fields) < 2:
+        continue
+    name, value, *rest = fields
+    if "://" in value:
+        parsed = urlsplit(value)
+        host = parsed.hostname or ""
+        if parsed.port:
+            host = f"{host}:{parsed.port}"
+        value = urlunsplit((parsed.scheme, host, parsed.path, "", ""))
+    elif re.match(r"^[^/@\s]+@[^:\s]+:.+", value):
+        value = re.sub(r"^[^@]+@", "[REDACTED]@", value)
+    redacted.append("\t".join([name, value, *rest]))
+output.write_text("\n".join(redacted) + ("\n" if redacted else ""), encoding="utf-8")
+PY
+
+# Retain configuration origins and key names, never credential-bearing values.
+git config --show-origin --name-only --get-regexp \
+  'core\.hooksPath|include|credential|url\..*\.insteadOf' \
+  > "$EVIDENCE/git-config-sensitive-keys.txt" 2>&1 || true
+
+# Build the manifest outside the evidence tree and atomically install it last.
+EVIDENCE="$EVIDENCE" python - <<'PY'
+from hashlib import sha256
+from pathlib import Path
+import os
+
+root = Path(os.environ["EVIDENCE"]).resolve()
+lines = []
+for path in sorted(root.rglob("*")):
+    if not path.is_file() or path.name == "SHA256SUMS":
+        continue
+    digest = sha256(path.read_bytes()).hexdigest()
+    lines.append(f"{digest}  {path.relative_to(root).as_posix()}")
+temporary = root.parent / f".{root.name}.SHA256SUMS.tmp"
+temporary.write_text("\n".join(lines) + "\n", encoding="utf-8")
+os.replace(temporary, root / "SHA256SUMS")
+PY
 ```
 
 Also preserve file metadata, relevant scripts, hook directories, scheduler definitions, process listings, IDE/task-runner configuration, logs, refs, recent commits, signatures, and account audit information where available.
