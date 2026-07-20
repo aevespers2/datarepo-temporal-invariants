@@ -18,7 +18,7 @@ The package documentation and source describe the following conceptual entry poi
 | Query expressions | `Filter`, partition objects, table selection | Expresses bounded reads and predicates | Inherited |
 | Lazy query interface | `NlkDataFrame` and Polars lazy operations | Composes data transformations before collection | Inherited |
 | Static export | `export_and_generate_site` | Generates a static catalog representation | Inherited |
-| Read-only API export | `roapi.generate_config` | Generates ROAPI configuration | Inherited |
+| Read-only API export | `datarepo.export.roapi.export_to_roapi_table` and `export_to_roapi_tables` | Generates ROAPI table configuration records | Inherited |
 
 Names are recorded here for orientation only. The exact accepted surface must be generated from the immutable source candidate after P2 baseline reproduction.
 
