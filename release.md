@@ -6,7 +6,7 @@ Status: `BLOCKED — OPEN REPOSITORY-INTEGRITY INCIDENT`
 
 No release is eligible. The repository records a suspected forensic-state integrity incident involving tracked `.forensics/last_run_epoch.txt`, a reported writer path at `scripts/git_forensics_autocommit.sh`, cross-worktree `Resource deadlock avoided` behavior, and an unexplained epoch change from `1769819269` to `1771791970`. These observations do not establish malicious activity, but repository trust, provenance, and release evidence are not acceptable until the writer and invocation path are identified, evidence is preserved, automation is contained and repaired, and independent replay closes the incident.
 
-The inherited `data-repository` Python package remains at version `0.0.2` with upstream metadata pointing to `neuralinkcorp/datarepo`. The mirror/fork/overlay/derivative identity decision remains required after incident closure. A substantial documentation candidate and `punchlist.md` now exist, but no accepted exact-head workflow result, repository-health approval, inherited-baseline reproduction, temporal contract, cross-repository compatibility witness, or release approval exists.
+The inherited `data-repository` Python package remains at version `0.0.2` with upstream metadata pointing to `neuralinkcorp/datarepo`. The mirror/fork/overlay/derivative identity decision remains required after incident closure. A substantial documentation candidate and `punchlist.md` now exist, including proposed ADR-0003's separation of local operational state, immutable run evidence, and reviewed repository evidence. No accepted exact-head workflow result, repository-health approval, inherited-baseline reproduction, temporal contract, cross-repository compatibility witness, incident repair, or release approval exists.
 
 ## Versioning
 
@@ -21,9 +21,11 @@ The inherited `data-repository` Python package remains at version `0.0.2` with u
 
 ### Incident containment and remediation prerequisite
 
-- Preserve the committed and observed forensic marker values, hashes, metadata, logs, worktree state, hooks, schedulers, process evidence, refs, remotes, credentials, and script identity.
+- Preserve the committed and observed forensic marker values, hashes, metadata, logs, worktree state, hooks, schedulers, process evidence, refs, remotes, relevant credential configuration names without values, and script identity.
 - Disable tracked-state auto-commit and live-worktree mutation affecting `.forensics/` until repair is accepted.
+- Approve or revise ADR-0003 before implementing the state-writer repair.
 - Move mutable run state out of tracked product paths or into an explicitly ignored local state location.
+- Record immutable run evidence separately and promote it to reviewed repository evidence only through an explicit review step.
 - Require repository/worktree identity binding, exclusive locking, atomic temporary-write/`fsync`/rename behavior, path and ownership validation, and fail-closed lock contention.
 - Reproduce and pass concurrent-writer, stale-lock, interrupted-write, recursive-invocation, wrong-worktree, shared-`.git`, symlink, unauthorized-owner, read-only, changed-script, and changed-hook fixtures.
 - Retain an independently reviewed incident report, residual-risk statement, evidence hashes, and rollback procedure.
@@ -46,22 +48,22 @@ The inherited `data-repository` Python package remains at version `0.0.2` with u
 - Immediate containment, evidence-capture requirements, technical repair requirements, validation fixtures, and incident-closure criteria are documented.
 - Product work has been reprioritized behind repository-integrity restoration.
 - A deployment evidence record fail-closes publication and packaging while the incident remains open.
-- A Pages-ready documentation candidate now separates inherited package behavior, local integrity/release controls, and the unimplemented temporal overlay.
-- Architecture, authority/claims, API/extension, onboarding, integrity operations, release evidence, identity, overlay-isolation, obstruction/gluing, and temporal-design documents exist.
-- `punchlist.md` now decomposes incident, documentation, identity, inherited baseline, temporal contract, cross-repository gluing, privacy, security, release, and recovery work.
+- A Pages-ready documentation candidate separates inherited package behavior, local integrity/release controls, and the unimplemented temporal overlay.
+- Architecture, authority/claims, API/extension, onboarding, integrity operations, release evidence, identity, overlay-isolation, obstruction/gluing, temporal-design, and operational-state/evidence decision documents exist.
+- `punchlist.md` decomposes incident, documentation, identity, inherited baseline, temporal contract, cross-repository gluing, privacy, security, release, and recovery work.
 - The candidate workflow is validation-only and does not retain checkout credentials or publish a package or Pages site.
 
-No package implementation, temporal overlay, publication artifact, credential, remote integration, enforcement path, or production authority is selected as releasable completed work.
+No package implementation, temporal overlay, publication artifact, credential, remote integration, enforcement path, incident repair, or production authority is selected as releasable completed work.
 
 ## Planned Changelog Entries
 
 - `Security`: preserve forensic epoch drift observations and classify them as a suspected integrity incident pending investigation.
-- `Security`: remove mutable forensics state from tracked live-worktree paths and add lock-safe, atomic, worktree-bound state handling.
+- `Security`: separate local mutable state, immutable run evidence, and reviewed repository evidence; add lock-safe, atomic, worktree-bound state handling after approval.
 - `Fixed`: prevent recursive, concurrent, cross-worktree, symlink, path-escape, and unauthorized-owner mutations.
-- `Tests`: add deterministic incident-reproduction and containment fixtures.
+- `Tests`: add deterministic incident-reproduction, containment, state-promotion, and gluing fixtures.
 - `Provenance`: retain evidence hashes, script identity, refs, hooks, scheduler/process findings, and independent replay results.
 - `Fork`: record approved upstream baseline, divergence, attribution, ownership, and publication identity after incident closure.
-- `Documentation`: record the approved temporal-overlay charter, semantics, compatibility, limitations, migration, gluing contracts, and rollback policy.
+- `Documentation`: record approved temporal-overlay charter, semantics, compatibility, limitations, migration, gluing contracts, and rollback policy.
 - `Release`: publish only after artifacts, SBOM, checksums, provenance, approvals, and all acceptance gates pass.
 
 ## Acceptance Gates
@@ -71,9 +73,10 @@ No package implementation, temporal overlay, publication artifact, credential, r
 | Incident containment | FAIL | Preserve evidence; disable the unsafe writer, scheduler, hook, or task path; prevent further tracked `.forensics/` mutation. |
 | Root-cause determination | FAIL | Identify the exact writer and invocation path; disposition benign and adversarial hypotheses using retained evidence. |
 | Repository integrity | FAIL | Refs, commits, hooks, remotes, credentials, worktrees, schedulers, logs, ownership, and file metadata contain no unexplained activity, or findings are remediated. |
-| State-writer repair | FAIL | Mutable state is out-of-tree or ignored; writes are atomic, exclusively locked, worktree-bound, path-safe, ownership-checked, and fail closed. |
-| Incident fixtures | FAIL | All concurrency, interruption, recursion, cross-worktree, symlink, ownership, read-only, script-hash, and hook-change fixtures pass. |
-| Independent validation | FAIL | Inspector reproduces the prior failure mode, confirms containment and repair, verifies evidence hashes, and reports no unexplained mutation. |
+| State/evidence architecture | REVIEW | ADR-0003 exists; approve or revise its local-state, immutable-run-evidence, and reviewed-evidence classes. |
+| State-writer repair | FAIL | Mutable state is out-of-tree or ignored; evidence classes remain separate; writes are atomic, exclusively locked, worktree-bound, path-safe, ownership-checked, and fail closed. |
+| Incident fixtures | FAIL | All concurrency, interruption, recursion, cross-worktree, symlink, ownership, read-only, script-hash, hook-change, and evidence-promotion fixtures pass. |
+| Independent validation | FAIL | Inspector reproduces the prior failure mode, confirms containment and repair, verifies evidence hashes, and reports no unexplained repository mutation. |
 | Incident closure approval | PENDING | Architect explicitly closes the incident after evidence and residual risk are reviewed. |
 | Fork/scope decision | BLOCKED | After incident closure, approve repository identity, package/release name, publication target, and overlay boundary. |
 | Task completion | FAIL | Complete and evidence the blocking items in `punchlist.md`; mark corresponding task-chain work `DONE`. |
@@ -83,7 +86,7 @@ No package implementation, temporal overlay, publication artifact, credential, r
 | Temporal determinism | NOT INCLUDED | If executable overlay work is proposed, canonical outputs, hashes, fixtures, compatibility, and migrations pass. |
 | Cross-repository gluing | PROPOSED | Pairwise contracts and triple-overlap fixtures preserve subject identity, capability, status, evidence, revocation, privacy, policy and rollback semantics. |
 | Security | FAIL | Incident is closed and dependencies, secrets, parsers/serialization, filesystem/network, CI, permissions, custom functions, build hooks, data capabilities, privacy and supply chain pass review. |
-| Documentation | PARTIAL | Project, architecture, design, operations, authority, evidence, obstruction and punch-list material exists; final exact-head build, link/diagram/accessibility/privacy review, artifact and approval remain pending. |
+| Documentation | PARTIAL | Project, architecture, design, operations, authority, evidence, obstruction, ADR, and punch-list material exists; final exact-head build, link/diagram/accessibility/privacy review, artifact and approval remain pending. |
 | Provenance | FAIL | Candidate/upstream commits, commands, runtimes, reports, artifacts, hashes, SBOM, attestations, contract versions, capability references and reviewer identities are retained. |
 | Exact-head CI | PENDING | The final documentation pull-request head passes source assertion, validation-only checks, strict documentation build and retained evidence; no accepted run is currently recorded for the updated head. |
 | Deployment | BLOCKED | `deploy.md` records fail-closed deployment posture; no package, tag, publication, workflow activation, remote integration, downstream pin, or Pages deployment is authorized. |
@@ -95,7 +98,8 @@ No package implementation, temporal overlay, publication artifact, credential, r
 
 - Binary-safe diff, committed copy, observed copy, metadata, and SHA-256 values for `.forensics/last_run_epoch.txt`.
 - Script, hook, scheduler, task-runner, lockfile, configuration, and log snapshots with hashes.
-- `git status --porcelain=v2 --branch`, worktree inventory, reflogs, refs, remotes, relevant Git configuration, and account/audit evidence where available.
+- Repository identity, Git common directory, worktree identity, process and parent identity, invocation source, local-state and lock paths, and pre/post hashes.
+- `git status --porcelain=v2 --branch`, worktree inventory, reflogs, refs, remotes, relevant Git configuration names without secret values, and account/audit evidence where available.
 - Root-cause report, hypothesis disposition table, containment record, residual-risk statement, and explicit closure approval.
 - Repair patch, deterministic reproduction fixtures, complete test results, independent replay report, and rollback instructions.
 
@@ -105,7 +109,7 @@ No package implementation, temporal overlay, publication artifact, credential, r
 - Repository identity and upstream/local provenance decision records.
 - Temporal contract/result schema proposals, canonicalization vectors, compatibility/migration plan and fixture manifest.
 - Cross-repository edge schemas and deterministic witnesses for Seeker → observation → validator; Repository `0` → Repository `1` → adapter; validator → Bridge → UI; validator → policy → release/deployment; and incident/revocation → evidence store → downstream cache.
-- Evidence correction, revocation, retention, publication and rollback procedures.
+- Evidence-class promotion, correction, revocation, retention, publication and rollback procedures.
 
 ### Release bundle after incident closure
 
@@ -117,7 +121,7 @@ No package implementation, temporal overlay, publication artifact, credential, r
 
 ## Rollback Criteria
 
-Immediately withdraw or block any candidate if forensic state changes without an identified authorized writer; evidence hashes differ; lock contention, recursion, cross-worktree writes, symlink/path escape, unauthorized ownership, or non-atomic writes recur; refs, hooks, remotes, credentials, or scheduler activity remain unexplained; independent replay fails; or incident closure evidence is incomplete.
+Immediately withdraw or block any candidate if forensic state changes without an identified authorized writer; evidence hashes differ; routine operational state writes into tracked product paths; lock contention, recursion, cross-worktree writes, symlink/path escape, unauthorized ownership, or non-atomic writes recur; refs, hooks, remotes, credentials, or scheduler activity remain unexplained; independent replay fails; or incident closure evidence is incomplete.
 
 After release eligibility is restored, also withdraw or roll back if attribution or identity is unclear, imported and local work cannot be separated, packaging misrepresents the inherited `0.0.2` baseline, tests are non-reproducible, temporal semantics accept invalid state or break compatibility silently, `indeterminate` is promoted to pass, gluing witnesses fail, validation is treated as authorization, sensitive data leaks, revocation does not propagate, severe security findings remain, documentation is materially inaccurate, provenance is incomplete, or published hashes differ. Restore the last independently verified immutable baseline and preserve rejected candidate and incident evidence.
 
@@ -125,7 +129,7 @@ After release eligibility is restored, also withdraw or roll back if attribution
 
 - Open suspected repository-integrity incident involving tracked forensic epoch drift and reported cross-worktree deadlock behavior.
 - Exact writer, invocation path, scheduler/hook/task source, root cause, and authorization have not been established.
-- Evidence capture, containment confirmation, technical repair, deterministic fixtures, independent replay, and explicit incident closure are incomplete.
+- Evidence capture, containment confirmation, ADR-0003 approval or revision, technical repair, deterministic fixtures, independent replay, and explicit incident closure are incomplete.
 - Most blocking `punchlist.md` items remain incomplete.
 - The updated documentation candidate has no accepted exact-head workflow evidence.
 - No current install/build/test/static/security/documentation/provenance release bundle exists.
@@ -137,7 +141,8 @@ After release eligibility is restored, also withdraw or roll back if attribution
 
 ## Release Log
 
-- 2026-07-16: Aligned the candidate with the explicit fork/overlay decision gate; no release-ready work selected.
+- 2026-07-20: Added proposed ADR-0003 separating mutable operational state, immutable run evidence, and reviewed repository evidence. Release and incident status remain blocked.
+- 2026-07-20: Added a substantial Pages-ready documentation, punch-list, and obstruction/gluing milestone. Release and deployment remain blocked; no implementation or authority gate changed to pass.
 - 2026-07-17: Elevated unexplained tracked forensic-state drift to a release-blocking suspected integrity incident; added containment, evidence, repair, independent-validation, artifact, and rollback gates. No release-ready work selected.
 - 2026-07-17: Added `deploy.md` with environment, permissions, artifact, configuration, health, observability, rollback, and post-deployment evidence; no deployment was attempted.
-- 2026-07-20: Added a substantial Pages-ready documentation, punch-list, and obstruction/gluing milestone. Release and deployment remain blocked; no implementation or authority gate changed to pass.
+- 2026-07-16: Aligned the candidate with the explicit fork/overlay decision gate; no release-ready work selected.
