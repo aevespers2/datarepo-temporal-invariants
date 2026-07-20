@@ -1,9 +1,21 @@
+from pathlib import Path
 import shutil
-import os
 
 
 def on_page_markdown(markdown, page, config, files):
-    iframe_str = """
+    catalog_index = Path("docs/examples/web_catalog/index.html")
+    catalog_data = Path("docs/examples/web_catalog/data.json")
+    if page.file.src_path != "README.md":
+        return markdown
+
+    if not (catalog_index.is_file() and catalog_data.is_file()):
+        return markdown.replace(
+            "<!-- mkdocs:iframe -->",
+            "> The inherited web-catalog preview is not generated in this review build. "
+            "Generate and review it separately before including it in retained evidence.",
+        )
+
+    iframe = """
 
 <div align="center" style="position: relative;">
     <button onclick="window.open('examples/web_catalog/index.html', '_blank')" style="position: absolute; top: -40px; right: 10px; z-index: 1000; padding: 8px; background: #000; color: #fff; border: none; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
@@ -17,17 +29,14 @@ def on_page_markdown(markdown, page, config, files):
     <br><br>
 </div>
     """
-    if page.file.src_path == "README.md":
-        markdown = markdown.replace("<!-- mkdocs:iframe -->", iframe_str)
-    return markdown
+    return markdown.replace("<!-- mkdocs:iframe -->", iframe)
 
 
 def on_post_build(config):
-    # Copy the data.json file to the /site directory
-    # This is used to render the web catalog as an iFrame in the docs
-    site_dir = config["site_dir"]
+    source = Path("docs/examples/web_catalog/data.json")
+    if not source.is_file():
+        return
 
-    src_path = os.path.join("docs", "examples", "web_catalog", "data.json")
-    dst_path = os.path.join(site_dir, "data.json")
-
-    shutil.copy2(src_path, dst_path)
+    destination = Path(config["site_dir"]) / "data.json"
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(source, destination)
