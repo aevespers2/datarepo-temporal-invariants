@@ -16,6 +16,7 @@ All notable product, architecture, implementation, release, and deployment chang
 - 2026-07-19 — Added a proposed temporal-contract design envelope covering time models, canonicalization, result states, compatibility, fixtures, security, evidence, and rollback without selecting unapproved semantics.
 - 2026-07-19 — Added proposed ADR-0001 comparing mirror, maintained-fork, documentation-only, and renamed-derivative identity models; the decision remains blocked by incident closure.
 - 2026-07-19 — Added proposed ADR-0002 defining an explicit, additive, read-only temporal-validation boundary separated from inherited query behavior; the proposal remains dependent on P1–P3 approval.
+- 2026-07-20 — Corrected the architecture status so forensic automation remains open and blocked rather than being described as contained without accepted evidence.
 
 ### Documentation
 - 2026-07-19 — Added a repository project guide, architecture diagrams, incident-safe developer onboarding, repository-integrity operations playbook, proposed temporal-overlay design, and expanded MkDocs navigation.
@@ -24,6 +25,8 @@ All notable product, architecture, implementation, release, and deployment chang
 - 2026-07-19 — Added inherited API and extension-boundary documentation covering stability classes, candidate adapters, forbidden implicit integrations, result separation, compatibility questions, and implementation documentation obligations.
 - 2026-07-19 — Added a release-evidence matrix that separates documentation-candidate verification from incident, inherited-runtime, temporal, deployment, and release-approval evidence.
 - 2026-07-19 — Expanded the project guide and MkDocs navigation to include governance, API boundaries, release evidence, and architecture decision records.
+- 2026-07-20 — Added a safety-first site homepage, Mermaid rendering configuration, clean-build behavior when optional catalog assets are absent, corrected ROAPI entry points, and incident-safe validation commands using the existing `test/` tree and Python 3.10+ source requirement.
+- 2026-07-20 — Repaired evidence capture to handle absent markers, reject symlinked observations, redact remote credentials, retain sensitive configuration names without values, and exclude the checksum manifest from its own atomic hash set.
 
 ### Implementation
 - Existing upstream-derived code is not recorded as newly completed local work; temporal notes remain proposals until contracts and fixtures exist.
@@ -42,10 +45,12 @@ All notable product, architecture, implementation, release, and deployment chang
 - Release remains blocked by the incident gate, fork/scope approval, upstream divergence evidence, current build/test/security results, and provenance.
 - 2026-07-19 — Documentation completeness improved, but no build, test, security, provenance, publication, or deployment gate was marked passed.
 - 2026-07-19 — Added artifact, digest, replay, review, invalidation, and fail-closed evidence requirements without changing the blocked release decision.
+- 2026-07-20 — Replaced the credential-bearing package and Pages publishing workflow with least-privilege, exact-head validation and retained evidence. No package or site publication is authorized.
 
 ### Deployment
 - No package publication under the inherited identity or new temporal product name is authorized.
 - Documentation-site deployment remains blocked until repository identity, privacy review, exact-head verification, provenance, and release approval are complete.
+- 2026-07-20 — Removed automated PyPI and `gh-pages` publication from the candidate workflow; deployment remains blocked.
 
 ## Entry Format
 - Date
