@@ -12,6 +12,7 @@ The active priority is repository-integrity containment and verification. The tr
 | Repository identity | Awaiting mirror/fork/overlay/derivative decision |
 | Temporal-invariant capability | Proposed only; no approved executable overlay |
 | Repository-integrity incident | Open and release-blocking |
+| Material obstruction | Mutable operational state and tracked evidence share an incompatible path/meaning |
 | Build/test/security evidence | Not accepted for the current candidate |
 | Packaging or publication | Prohibited until release gates pass |
 | Documentation site | Suitable for local review only; publication remains blocked |
@@ -25,7 +26,8 @@ The prospective local overlay would add explicit, versioned contracts for tempor
 1. closure of the repository-integrity incident;
 2. approval of repository identity and publication ownership;
 3. reproduction of the inherited baseline;
-4. approval of temporal semantics, compatibility, migration, fixtures, and rollback.
+4. approval of temporal semantics, compatibility, migration, fixtures, and rollback;
+5. approval of cross-repository identity, capability, evidence, display, revocation, and recovery contracts.
 
 ## Product boundaries
 
@@ -36,6 +38,7 @@ The prospective local overlay would add explicit, versioned contracts for tempor
 - contain and investigate mutable forensic state;
 - establish an incident-safe contributor workflow;
 - define the design envelope for a possible future temporal overlay;
+- analyze pairwise and triple-overlap integration obstructions;
 - retain release, rollback, and verification requirements.
 
 ### Not in scope now
@@ -45,8 +48,20 @@ The prospective local overlay would add explicit, versioned contracts for tempor
 - changing query semantics or storage adapters;
 - adding an executable temporal validator before contract approval;
 - enabling automatic writes, hooks, schedulers, or cross-worktree mutation;
+- treating a temporal validation result as authorization to mutate, deploy, publish, or pay;
 - presenting incident observations as proof of malicious activity;
 - marking build, test, security, or release gates as passed without evidence.
+
+## Material obstruction
+
+The strongest current gluing failure is that `.forensics/last_run_epoch.txt` has been treated as both mutable operational state and tracked repository evidence. Those meanings are incompatible at one automatically written tracked path:
+
+- operational state is expected to change during normal runs;
+- tracked evidence is expected to change only through intentional, reviewable repository updates.
+
+As a result, a benign automation run can resemble an unauthorized repository mutation until writer identity, invocation path, worktree identity, locks, and evidence are reconstructed. The proposed repair is documented in [ADR-0003](decisions/0003-separate-operational-state-from-evidence.md): separate worktree-bound local state, immutable run evidence, and explicitly reviewed repository evidence. The ADR is proposed only; it does not implement or approve remediation.
+
+See [Obstruction and Gluing Analysis](obstruction-and-gluing.md) for the complete ledger, contract-edge matrix, triple-overlap fixtures, and repair sequence.
 
 ## System context
 
@@ -99,6 +114,7 @@ The local planning files may describe future work, but they do not retroactively
 | Temporal contracts | Would define versioned temporal assertions and validation outputs | Proposed, not implemented |
 | Integrity controls | Preserve evidence and prevent unsafe mutable-state behavior | Local, incomplete |
 | Release controls | Gate publication on provenance, tests, security, artifacts, and approval | Local, blocked |
+| Portfolio gluing | Would connect Seeker records, capabilities, temporal evidence, Bridge, interfaces, and policy decisions | Proposed, owners unresolved |
 
 ## Documentation authority
 
@@ -110,7 +126,8 @@ The current documentation package adds review material only. It does not:
 - approve a repository or package identity;
 - verify the inherited package baseline;
 - accept temporal schemas or semantics;
-- authorize Pages or package publication.
+- approve Repository `1` or another capability issuer;
+- authorize remote observations, Pages publication, or package publication.
 
 See [Authority and claims governance](authority-and-claims.md) for the complete vocabulary and publication stop rules.
 
@@ -132,18 +149,23 @@ From a clean immutable commit, reproduce installation, complete tests, formattin
 
 Define users, problems, inputs, outputs, canonical semantics, time model, compatibility, migrations, non-goals, fixtures, threat model, and rollback before implementation.
 
+### P3G — Approve cross-repository gluing
+
+Assign owners and versioned contracts for source observations, subject identity, capability issuance, temporal results, evidence transport, human display, correction/revocation, policy decisions, emergency stop, and recovery. Prove pairwise and triple-overlap behavior with fail-closed fixtures.
+
 ### P4 — Implement separately
 
 Only after approval, add versioned schemas and validators without silently modifying inherited interfaces or claiming unverified compatibility.
 
 ## Reviewable architecture decisions
 
-Two proposed ADRs turn the major unresolved choices into explicit review records:
+Three proposed ADRs turn major unresolved choices into explicit review records:
 
 - [ADR-0001: Repository identity and publication authority](decisions/0001-repository-identity.md) compares mirror, maintained-fork, documentation-only, and renamed-derivative models. It remains blocked by incident closure.
 - [ADR-0002: Isolate temporal validation from inherited query behavior](decisions/0002-temporal-overlay-isolation.md) proposes an additive, explicit, read-only validation boundary. It remains dependent on identity and contract approval.
+- [ADR-0003: Separate mutable operational state from immutable evidence](decisions/0003-separate-operational-state-from-evidence.md) proposes local operational state, immutable run evidence, and reviewed repository evidence as separate classes. It remains dependent on preserved incident evidence, implementation fixtures, independent replay, and explicit approval.
 
-Neither ADR is accepted implementation authority.
+None of these ADRs grants implementation authority.
 
 ## Release posture
 
@@ -157,6 +179,7 @@ The [release evidence matrix](release-evidence.md) maps each gate to the immutab
 
 - [Repository project guide](project-guide.md)
 - [Architecture and trust boundaries](architecture.md)
+- [Obstruction and gluing analysis](obstruction-and-gluing.md)
 - [Authority and claims governance](authority-and-claims.md)
 - [API and extension boundaries](api-and-extension-boundaries.md)
 - [Developer onboarding](developer-guide.md)
@@ -165,6 +188,7 @@ The [release evidence matrix](release-evidence.md) maps each gate to the immutab
 - [Proposed temporal-overlay design envelope](temporal-overlay-design.md)
 - [ADR-0001: Repository identity](decisions/0001-repository-identity.md)
 - [ADR-0002: Temporal-overlay isolation](decisions/0002-temporal-overlay-isolation.md)
+- [ADR-0003: Operational state and evidence separation](decisions/0003-separate-operational-state-from-evidence.md)
 
 ### Inherited package material
 
@@ -175,6 +199,7 @@ The [release evidence matrix](release-evidence.md) maps each gate to the immutab
 ### Repository control records
 
 - [Task chain](https://github.com/aevespers2/datarepo-temporal-invariants/blob/main/taskchain.md)
+- [Punch list](https://github.com/aevespers2/datarepo-temporal-invariants/blob/main/punchlist.md)
 - [Release plan](https://github.com/aevespers2/datarepo-temporal-invariants/blob/main/release.md)
 - [Deployment record](https://github.com/aevespers2/datarepo-temporal-invariants/blob/main/deploy.md)
 - [Changelog](https://github.com/aevespers2/datarepo-temporal-invariants/blob/main/changelog.md)
