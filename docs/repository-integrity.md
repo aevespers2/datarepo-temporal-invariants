@@ -63,16 +63,19 @@ else
 fi
 
 # Redact URL user information, query strings, and fragments before retention.
-git remote -v | python - "$EVIDENCE/remotes.redacted.txt" <<'PY'
+REMOTE_TMP="$(mktemp "${TMPDIR:-/tmp}/datarepo-remotes.XXXXXX")"
+git remote -v > "$REMOTE_TMP"
+python - "$REMOTE_TMP" "$EVIDENCE/remotes.redacted.txt" <<'PY'
 from pathlib import Path
 import re
 import sys
 from urllib.parse import urlsplit, urlunsplit
 
-output = Path(sys.argv[1])
+source = Path(sys.argv[1])
+output = Path(sys.argv[2])
 redacted = []
-for raw in sys.stdin:
-    fields = raw.rstrip("\n").split()
+for raw in source.read_text(encoding="utf-8", errors="replace").splitlines():
+    fields = raw.split()
     if len(fields) < 2:
         continue
     name, value, *rest = fields
@@ -86,6 +89,7 @@ for raw in sys.stdin:
         value = re.sub(r"^[^@]+@", "[REDACTED]@", value)
     redacted.append("\t".join([name, value, *rest]))
 output.write_text("\n".join(redacted) + ("\n" if redacted else ""), encoding="utf-8")
+source.unlink(missing_ok=True)
 PY
 
 # Retain configuration origins and key names, never credential-bearing values.
