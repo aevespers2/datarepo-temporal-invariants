@@ -101,7 +101,7 @@ flowchart LR
     GIT --> CHG[changelog.md]
     GIT --> INC[Incident record]
 
-    AUTO[Forensics automation] -. currently contained .-> STATE[Mutable forensic state]
+    AUTO[Forensics automation] -. containment not yet accepted .-> STATE[Mutable forensic state]
     STATE -. must not mutate tracked product paths .-> GIT
 
     PLAN --> GATE{Approval and evidence gates}
@@ -110,6 +110,8 @@ flowchart LR
     GATE -->|blocked| STOP[No release or deployment]
     GATE -->|future explicit approval| CAND[Immutable candidate]
 ```
+
+The automation is **not** classified as contained until a preserved containment record, writer identity, invocation path, and independent replay have been accepted. The incident remains open and release-blocking.
 
 ## Trust zones
 
