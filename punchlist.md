@@ -8,6 +8,7 @@ This punch list implements the sequencing and evidence requirements in `taskchai
 - [ ] Identify every writer, invocation path, hook, scheduler, task runner, process, worktree and repository identity involved.
 - [ ] Capture refs, reflogs, remotes, relevant Git configuration names without secret values, ownership and filesystem evidence.
 - [ ] Disable tracked-state auto-commit and live-worktree mutation affecting `.forensics/`.
+- [ ] Approve or revise ADR-0003's separation of local operational state, immutable run evidence and reviewed repository evidence.
 - [ ] Move mutable run state out of tracked product paths or into an explicitly ignored and ownership-checked location.
 - [ ] Implement exclusive locking, atomic write/`fsync`/rename, path validation and worktree binding under a separately approved implementation task.
 - [ ] Pass concurrent, interrupted, stale-lock, recursive, wrong-worktree, shared-`.git`, symlink, unauthorized-owner, read-only, changed-script and changed-hook fixtures.
@@ -21,6 +22,7 @@ This punch list implements the sequencing and evidence requirements in `taskchai
 - [x] Add trust-boundary, authority/claims, API/extension, developer, integrity-operations and release-evidence guidance.
 - [x] Add proposed ADRs for repository identity and temporal-overlay isolation.
 - [x] Add obstruction and gluing analysis with pairwise edges, triple overlaps, fail-closed conditions and repair order.
+- [x] Add ADR-0003 separating mutable operational state, immutable run evidence and reviewed repository evidence.
 - [x] Add this punch list and align it with `taskchain.md`, `release.md` and `changelog.md`.
 - [x] Replace credential-bearing publication with least-privilege validation-only workflow behavior in the candidate.
 - [ ] Obtain an exact-head GitHub Actions run for the final candidate.
