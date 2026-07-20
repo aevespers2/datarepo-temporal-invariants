@@ -88,6 +88,7 @@ nav:
   - Decision Records:
       - ADR-0001 — Repository Identity: decisions/0001-repository-identity.md
       - ADR-0002 — Overlay Isolation: decisions/0002-temporal-overlay-isolation.md
+      - ADR-0003 — Operational State and Evidence: decisions/0003-separate-operational-state-from-evidence.md
   - Inherited Package:
       - Overview: README.md
       - User Guide: user-guide.md
