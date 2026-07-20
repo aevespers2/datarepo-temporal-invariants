@@ -3,6 +3,7 @@ name: Validate datarepo candidate
 on:
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
   push:
     branches: [main]
   workflow_dispatch:
@@ -20,7 +21,7 @@ env:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     steps:
       - name: Check out exact submitted source
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
@@ -45,8 +46,20 @@ jobs:
           cache: pip
           cache-dependency-path: requirements-validation.txt
 
-      - name: Install validation-only dependencies
+      - name: Install validation dependencies
         run: python -m pip install --requirement requirements-validation.txt
+
+      - name: Validate package metadata and declared extras
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p reports/candidate-validation
+          python -m pip install \
+            --dry-run \
+            --no-deps \
+            --no-build-isolation \
+            ".[dev]" \
+            2>&1 | tee reports/candidate-validation/package-metadata-dry-run.txt
 
       - name: Compile inherited source
         run: python -m compileall -q src/datarepo
@@ -56,6 +69,55 @@ jobs:
           mkdir -p reports/candidate-validation
           python -m pytest -q test \
             --junitxml=reports/candidate-validation/pytest.xml
+
+      - name: Run fatal lint checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p reports/candidate-validation
+          flake8 src/datarepo \
+            --count \
+            --select=E9,F63,F7,F82 \
+            --show-source \
+            --statistics \
+            2>&1 | tee reports/candidate-validation/flake8-fatal.txt
+
+      - name: Record broader lint inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          flake8 src/datarepo \
+            --count \
+            --exit-zero \
+            --max-complexity=10 \
+            --max-line-length=127 \
+            --statistics \
+            2>&1 | tee reports/candidate-validation/flake8-inventory.txt
+
+      - name: Check formatting
+        shell: bash
+        run: |
+          set -euo pipefail
+          black --check src/datarepo 2>&1 \
+            | tee reports/candidate-validation/black.txt
+
+      - name: Run type checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          mypy src/datarepo 2>&1 \
+            | tee reports/candidate-validation/mypy.txt
+
+      - name: Generate reviewed web catalog fixture
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf docs/examples/web_catalog
+          mkdir -p docs/examples/web_catalog
+          python docs/examples/generate_tpc_site.py \
+            --output-dir docs/examples/web_catalog
+          test -f docs/examples/web_catalog/index.html
+          test -f docs/examples/web_catalog/data.json
 
       - name: Build documentation strictly
         run: mkdocs build --strict --site-dir site
