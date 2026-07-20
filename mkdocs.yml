@@ -77,6 +77,7 @@ nav:
   - Repository Guide: project-guide.md
   - Architecture and Design:
       - Architecture: architecture.md
+      - Obstruction and Gluing Analysis: obstruction-and-gluing.md
       - Authority and Claims: authority-and-claims.md
       - API and Extension Boundaries: api-and-extension-boundaries.md
       - Proposed Temporal Overlay: temporal-overlay-design.md
