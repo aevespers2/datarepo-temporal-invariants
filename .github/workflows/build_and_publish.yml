@@ -26,6 +26,7 @@ jobs:
       - name: Check out exact submitted source
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
+          repository: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name || github.repository }}
           ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
 
@@ -37,6 +38,7 @@ jobs:
           set -euo pipefail
           actual="$(git rev-parse HEAD)"
           test "$actual" = "$EXPECTED_HEAD"
+          test -z "$(git status --porcelain)"
           printf 'verified_head=%s\n' "$actual"
 
       - name: Set up Python
@@ -45,6 +47,13 @@ jobs:
           python-version: "3.10"
           cache: pip
           cache-dependency-path: requirements-validation.txt
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: src/datarepo/export/static_site/package-lock.json
 
       - name: Install validation dependencies
         run: python -m pip install --requirement requirements-validation.txt
@@ -108,6 +117,16 @@ jobs:
           mypy src/datarepo 2>&1 \
             | tee reports/candidate-validation/mypy.txt
 
+      - name: Build static catalog assets
+        shell: bash
+        working-directory: src/datarepo/export/static_site
+        run: |
+          set -euo pipefail
+          npm ci --ignore-scripts --no-audit --no-fund
+          npm run build
+          test -f precompiled/index.html
+          test -d precompiled/assets
+
       - name: Generate reviewed web catalog fixture
         shell: bash
         run: |
@@ -152,7 +171,10 @@ jobs:
           set -euo pipefail
           mkdir -p reports/candidate-validation
           git rev-parse HEAD > reports/candidate-validation/exact-head.txt
+          git status --porcelain > reports/candidate-validation/git-status.txt
           python --version > reports/candidate-validation/python-version.txt 2>&1
+          node --version > reports/candidate-validation/node-version.txt 2>&1
+          npm --version > reports/candidate-validation/npm-version.txt 2>&1
           python -m pip freeze > reports/candidate-validation/dependencies.txt
           if command -v mkdocs >/dev/null 2>&1; then
             mkdocs --version > reports/candidate-validation/mkdocs-version.txt 2>&1
@@ -161,7 +183,8 @@ jobs:
             tar --sort=name \
                 --mtime='UTC 1970-01-01' \
                 --owner=0 --group=0 --numeric-owner \
-                -czf reports/candidate-validation/site.tar.gz site
+                -cf reports/candidate-validation/site.tar site
+            gzip -n reports/candidate-validation/site.tar
           fi
           python - <<'PY'
           from hashlib import sha256
