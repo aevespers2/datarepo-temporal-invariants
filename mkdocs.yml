@@ -81,10 +81,12 @@ nav:
       - Authority and Claims: authority-and-claims.md
       - API and Extension Boundaries: api-and-extension-boundaries.md
       - Proposed Temporal Overlay: temporal-overlay-design.md
+  - Review and Accessibility:
+      - Accessibility and Review Evidence: accessibility-and-review-evidence.md
+      - Release Evidence: release-evidence.md
+      - Integrity Operations: repository-integrity.md
   - Development and Operations:
       - Developer Guide: developer-guide.md
-      - Integrity Operations: repository-integrity.md
-      - Release Evidence: release-evidence.md
   - Decision Records:
       - ADR-0001 — Repository Identity: decisions/0001-repository-identity.md
       - ADR-0002 — Overlay Isolation: decisions/0002-temporal-overlay-isolation.md

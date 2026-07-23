@@ -20,6 +20,7 @@ All notable product, architecture, implementation, release, and deployment chang
 - 2026-07-20 — Added an obstruction and gluing analysis covering repository/package identity, subject identity, clocks and ordering, canonicalization, result semantics, evidence transport, remote-observation authority, privacy, build hooks, revocation, emergency stop, pairwise edges, and required triple-overlap witnesses.
 - 2026-07-20 — Added P3G to the task chain so cross-repository compatibility contracts and deterministic gluing witnesses precede any temporal-overlay implementation.
 - 2026-07-20 — Added proposed ADR-0003 separating local mutable operational state, immutable run evidence, and explicitly reviewed repository evidence; implementation remains blocked pending preservation, approval, fixtures, independent replay, and incident closure.
+- 2026-07-23 — Added P0D review-state requirements separating exact source, rendered documentation, generated API, inherited export, temporal-report, and governance-evidence surfaces. The protocol does not alter runtime or publication authority.
 
 ### Documentation
 - 2026-07-19 — Added a repository project guide, architecture diagrams, incident-safe developer onboarding, repository-integrity operations playbook, proposed temporal-overlay design, and expanded MkDocs navigation.
@@ -32,6 +33,8 @@ All notable product, architecture, implementation, release, and deployment chang
 - 2026-07-20 — Repaired evidence capture to handle absent markers, reject symlinked observations, redact remote credentials, retain sensitive configuration names without values, and exclude the checksum manifest from its own atomic hash set.
 - 2026-07-20 — Added `docs/obstruction-and-gluing.md`, linked it into Pages navigation, and created `punchlist.md` spanning incident containment, documentation verification, identity, inherited baseline, temporal contracts, portfolio gluing, security, privacy, release, and recovery.
 - 2026-07-20 — Added ADR-0003 to Pages navigation and aligned the project guide, task chain, punch list, release plan, and changelog around the state/evidence separation model.
+- 2026-07-23 — Added `docs/accessibility-and-review-evidence.md` with `DOCUMENTED_NOT_CERTIFIED` status, exact-artifact binding, review-state vocabulary, accessible diagram/prose equivalence, keyboard/focus, zoom/reflow, contrast/motion, screen-reader, privacy, correction, review-record, and fail-closed requirements.
+- 2026-07-23 — Updated the Pages home and navigation plus `taskchain.md`, `punchlist.md`, `release.md`, and this changelog so automated validation, accessibility certification, publication, runtime approval, and release approval remain distinct.
 
 ### Implementation
 - Existing upstream-derived code is not recorded as newly completed local work; temporal notes remain proposals until contracts and fixtures exist.
@@ -39,6 +42,7 @@ All notable product, architecture, implementation, release, and deployment chang
 - These observations do not prove malicious activity. Benign automation churn, lock contention, unauthorized invocation, hook or scheduler misuse, worktree confusion, and altered provenance remain hypotheses requiring evidence.
 - 2026-07-19 — No runtime, schema, query, storage, packaging, hook, scheduler, network, credential, or publication behavior changed in the documentation milestone.
 - 2026-07-20 — No runtime, schema, adapter, credential, enforcement, release, deployment, payment, publication, or incident-repair authority changed in the gluing and ADR milestone.
+- 2026-07-23 — No application code, inherited API, generated export, temporal schema, review automation, accessibility enforcement, deployment, or credential behavior changed in the accessibility documentation milestone.
 
 ### Security
 - The repository is now treated as under a suspected security incident until the writer, invocation path, refs, hooks, remotes, credentials, worktrees, logs, and file metadata are examined and the automation is repaired.
@@ -48,6 +52,7 @@ All notable product, architecture, implementation, release, and deployment chang
 - 2026-07-19 — Added documentation rules prohibiting unsupported compromise attribution and requiring evidence-qualified incident language.
 - 2026-07-20 — Documented fail-closed capability, hostile-input, evidence-revocation, publication-privacy, no-hidden-execution, emergency-stop, and bounded-recovery requirements across the proposed integration edges.
 - 2026-07-20 — Classified automatic promotion of mutable run state into tracked evidence as prohibited; reviewed promotion must remain explicit and independently verifiable.
+- 2026-07-23 — Added publication-boundary and failure-state review requirements for sensitive catalog samples, source URIs, private paths, incident evidence, missing assets, and absent generated content.
 
 ### Release
 - Release remains blocked by the incident gate, fork/scope approval, upstream divergence evidence, current build/test/security results, and provenance.
@@ -55,11 +60,13 @@ All notable product, architecture, implementation, release, and deployment chang
 - 2026-07-19 — Added artifact, digest, replay, review, invalidation, and fail-closed evidence requirements without changing the blocked release decision.
 - 2026-07-20 — Replaced the credential-bearing package and Pages publishing workflow with least-privilege, exact-head validation and retained evidence. No package or site publication is authorized.
 - 2026-07-20 — Added a concrete punch list, cross-repository witness requirements, and state/evidence architecture review gate; the candidate still requires an exact-head workflow run and all incident, identity, baseline, contract, privacy, provenance, and approval gates remain blocked or incomplete.
+- 2026-07-23 — Added a separate `Accessibility` gate with `DOCUMENTED_NOT_CERTIFIED` status. Exact rendered and assistive-technology evidence remains pending, and no release or publication status changed.
 
 ### Deployment
 - No package publication under the inherited identity or new temporal product name is authorized.
-- Documentation-site deployment remains blocked until repository identity, privacy review, exact-head verification, provenance, and release approval are complete.
+- Documentation-site deployment remains blocked until repository identity, privacy review, exact-head verification, provenance, accessibility evidence, and release approval are complete.
 - 2026-07-20 — Removed automated PyPI and `gh-pages` publication from the candidate workflow; deployment remains blocked.
+- 2026-07-23 — The accessibility protocol is documentation-only and does not enable Pages, package, service, or remote-data deployment.
 
 ## Entry Format
 - Date

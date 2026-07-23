@@ -1,6 +1,6 @@
 # Punch List
 
-This punch list implements the sequencing and evidence requirements in `taskchain.md` and `release.md`. A checked documentation item means the file exists in this candidate; it does not close the integrity incident, approve repository identity, prove runtime behavior, or authorize publication.
+This punch list implements the sequencing and evidence requirements in `taskchain.md` and `release.md`. A checked documentation item means the file exists in this candidate; it does not close the integrity incident, approve repository identity, prove runtime behavior, certify accessibility, or authorize publication.
 
 ## P0 — Repository-integrity incident
 
@@ -23,11 +23,16 @@ This punch list implements the sequencing and evidence requirements in `taskchai
 - [x] Add proposed ADRs for repository identity and temporal-overlay isolation.
 - [x] Add obstruction and gluing analysis with pairwise edges, triple overlaps, fail-closed conditions and repair order.
 - [x] Add ADR-0003 separating mutable operational state, immutable run evidence and reviewed repository evidence.
+- [x] Add an accessibility and review-evidence guide separating source, rendered, generated, inherited-export, temporal-report and governance surfaces.
+- [x] Define exact-artifact binding, review states, diagram/prose integrity, keyboard/focus, zoom/reflow, contrast/motion, screen-reader, privacy, correction and fail-closed evidence requirements.
 - [x] Add this punch list and align it with `taskchain.md`, `release.md` and `changelog.md`.
 - [x] Replace credential-bearing publication with least-privilege validation-only workflow behavior in the candidate.
 - [ ] Obtain an exact-head GitHub Actions run for the final candidate.
-- [ ] Pass strict MkDocs build, internal-link review, Mermaid rendering, accessibility spot-check, privacy review and generated-site boundary inspection.
-- [ ] Retain an immutable documentation evidence artifact and digest tied to the final head.
+- [ ] Pass strict MkDocs build, internal-link review, Mermaid rendering and generated-site boundary inspection.
+- [ ] Complete rendered keyboard, visible-focus, 200%/400% zoom and reflow, contrast, reduced-motion, screen-reader and plain-language reviews against one retained exact artifact.
+- [ ] Complete privacy and sensitive-data review for rendered pages, generated API content, inherited static exports, asset failures and incident records.
+- [ ] Retain an immutable documentation and accessibility evidence record plus digest tied to the final head.
+- [ ] Record omitted checks and limitations; do not infer certification from automated validation.
 
 ## P1 — Repository and product identity
 
@@ -47,6 +52,7 @@ This punch list implements the sequencing and evidence requirements in `taskchai
 - [ ] Review the custom Hatch/Node build hook, subprocesses, generated assets and network behavior.
 - [ ] Produce dependency inventory, vulnerability review, SBOM, source archive, sdist, wheel and SHA-256 manifest.
 - [ ] Verify static catalog and ROAPI exports without treating generated configuration as authorization.
+- [ ] Review the inherited static catalog and ROAPI-facing human documentation for keyboard, table, state, error, privacy and remote-asset accessibility.
 - [ ] Record reproducibility limits and rollback to the inherited baseline.
 
 ## P3 — Temporal-invariant contract
@@ -56,6 +62,7 @@ This punch list implements the sequencing and evidence requirements in `taskchai
 - [ ] Approve clock, ordering, window, late/missing data and uncertainty semantics.
 - [ ] Specify canonical bytes for Unicode, timestamps, decimals, floats, nulls, schemas, paths, maps, sets and binary references.
 - [ ] Define `pass`, `fail`, `indeterminate` and `error` semantics and portfolio-wide severity mapping.
+- [ ] Define text-equivalent result, uncertainty, correction, revocation, stale and authority-state communication that never collapses non-pass states into pass.
 - [ ] Define compatibility, migration, correction, revocation, retention and replay policies.
 - [ ] Define bounded resource, no-network, hostile-input and privacy requirements.
 - [ ] Create positive, negative, adversarial, migration and replay fixtures.
@@ -71,7 +78,7 @@ This punch list implements the sequencing and evidence requirements in `taskchai
 - [ ] Name the issuer, revoker, credential owner, data-governance owner and incident owner for remote observations.
 - [ ] Prove Seeker → observation → validator identity/provenance overlap with deterministic fixtures.
 - [ ] Prove Repository `0` → Repository `1` → adapter denial and expiry behavior.
-- [ ] Prove validator → Bridge → UI status and limitation preservation.
+- [ ] Prove validator → Bridge → UI status, limitation and accessible text-equivalence preservation.
 - [ ] Prove validator → policy → release/deployment separation of evidence and authority.
 - [ ] Prove incident/revocation propagation through evidence stores, interfaces and caches with bounded restart.
 
@@ -82,6 +89,7 @@ This punch list implements the sequencing and evidence requirements in `taskchai
 - [ ] Ensure custom Python table functions are never executed implicitly during documentation or schema inspection.
 - [ ] Define least-privilege remote-data credentials, rotation, expiry and revocation outside repository history and browser storage.
 - [ ] Define result/evidence correction, invalidation, withdrawal and retention procedures.
+- [ ] Verify that missing local assets, blocked remote assets, absent generated API content and optional inherited catalog files fail legibly without leaking private paths or data.
 - [ ] Run a portfolio emergency-stop and recovery tabletop covering this repository, Repository `1`, Bridge and interfaces.
 - [ ] Record monitoring, alert, incident, rollback and post-recovery evidence owners.
 
@@ -89,6 +97,6 @@ This punch list implements the sequencing and evidence requirements in `taskchai
 
 - [ ] Keep package, site, release and remote integration deployment blocked while P0 is open.
 - [ ] Tie every candidate artifact to an immutable source head and complete evidence manifest.
-- [ ] Require independent review of provenance, security, privacy, compatibility and rollback.
+- [ ] Require independent review of provenance, security, privacy, compatibility, accessibility and rollback.
 - [ ] Obtain explicit release approval after all blocking gates pass.
 - [ ] Retain rejected-candidate and incident evidence without exposing secrets or private data.
