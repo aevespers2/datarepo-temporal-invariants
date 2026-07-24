@@ -22,9 +22,11 @@ All notable product, architecture, implementation, release, and deployment chang
 - The repository is now treated as under a suspected security incident until the writer, invocation path, refs, hooks, remotes, credentials, worktrees, logs, and file metadata are examined and the automation is repaired.
 - Do not commit, discard, or normalize the timestamp drift before preserving hashes and metadata.
 - Auto-commit or live-worktree mutation touching `.forensics/` must remain disabled until lock-safe remediation and independent replay pass.
+- 2026-07-24 — Changed validation concurrency from mutable pull-request/ref identity to the immutable submitted head, disabled cancellation between exact heads, moved retained evidence outside the checkout, and added a tracked-source mutation assertion. The repair changes validation and provenance only; repository-integrity, release, publication, deployment, credential, and runtime authority remain blocked.
 
 ### Release
 - Release remains blocked by the incident gate, fork/scope approval, upstream divergence evidence, current build/test/security results, and provenance.
+- 2026-07-24 — Exact-head validation remains required before the trusted workflow candidate can merge. A workflow file and successful local construction cannot substitute for a completed GitHub Actions run and retained artifact.
 
 ### Deployment
 - No package publication under the inherited identity or new temporal product name is authorized.
