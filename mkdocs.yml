@@ -72,6 +72,9 @@ nav:
   - Home: /
   - User Guide: user-guide.md
   - API docs: api-docs.md
+  - Catalog: catalog.md
+  - Divergence: divergence.md
+  - Invariants: invariants.md
 
 hooks:
   - docs/hooks.py
